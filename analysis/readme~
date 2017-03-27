@@ -1,0 +1,8 @@
+step to perform the analysis:
+
+1. produce the daily data with:  producedailydata.py
+   - combines the data and simulation and split the data set into separated days
+
+2. find by eye the good day and list them in a file called "nameofthestation.txt"
+   look at the data with selectsdata.py
+   look at the selected data with plotselectsdata.py

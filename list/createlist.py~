@@ -1,0 +1,8 @@
+listname = 'jan2016.txt'
+f = open(listname,'w')
+year = 2016
+dstart = 2
+dstop = 31
+for d in range(dstart,dstop+1,1):
+    f.write(str(year) + ' ' + str(d) + '\n')
+

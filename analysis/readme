@@ -1,0 +1,22 @@
+step to perform the analysis:
+
+1. produce the daily data with:  producedailydata.py
+   - combines the data and simulation and split the data set into separated days
+
+2. find by eye the good day and list them in a file called "nameofthestation.txt"
+   look at the data with selectsdata.py
+   look at the selected data with plotselectedsdata.py
+   the list is in /GD_Tsys/list/   
+
+3. find the temperature dependence with tempparam.py
+   - will select the data without sun and find the linear relation between the radio baseline and the temperature
+   - will write the fit result if option "-save"
+
+4. fit the sun bump and compute the system temperature with fitradio.py
+   - corrects for the temperature dependence
+   - fit with a gaussian
+   - computes the error on each measurement
+   - computes the weighted mean and error
+
+
+   

@@ -1,0 +1,24 @@
+import utils
+import numpy as np
+import datetime 
+from scipy.optimize import curve_fit
+import radiotemp
+datafolder = '/Users/romain/work/Auger/EASIER/LPSC/monitoring/data/'
+correctionfile = datafolder + 'newcorrections.txt' #missing a few stations: chuletas, chape and gato is strange
+class Dataset:
+    def __init__(self, name = '',date1 =None,date2 =None):
+        self.name = name
+        self.date1 = None
+        self.date2 = None
+        if date1 is not None:
+            self.date1 = date1
+        if date2 is not None:
+            self.date2 = date2
+        self.data = []
+        self.radio = np.array([])
+        self.varradio = np.array([])
+        #corrected radio after a fit
+        self.radioc= np.array([])
+        self.tempLL = np.array([])
+        self.pressureLL = np.array([])
+        self.tempelec = np.array([])

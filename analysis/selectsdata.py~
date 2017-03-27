@@ -1,0 +1,75 @@
+#######################################
+## make a selection of the day       ##
+## usable for the analysis based on  ##
+## the humidity data                 ##
+#######################################
+import numpy as np
+import matplotlib.pyplot as plt
+import sys
+import os
+cwd = os.getcwd()
+classpath = cwd + '/../classes/'
+utilspath = cwd + '/../utils/'
+sys.path.append(utilspath)
+sys.path.append(classpath)
+import constant
+import utils
+import pickle
+import dataset
+import daydata
+import argparse
+
+
+############################
+##  argument parser       ##
+############################
+parser = argparse.ArgumentParser()
+#parser.add_argument("daylist", type=str, nargs='?',default='marchlist.txt', help="text file with list of year doy")
+parser.add_argument("stname", type=str, nargs='?',default='popey', help="station name")
+parser.add_argument("--deltatheta", type=int, nargs='?',default=0, help="deviation from central value")
+parser.add_argument("--deltaphi", type=int, nargs='?',default=0, help="deviation from central value")
+args = parser.parse_args()
+
+#listname = args.daylist
+stname = args.stname
+stid = constant.GDstationidbyname[stname]
+delt = args.deltatheta
+delp = args.deltaphi
+
+humidity = np.array([])
+time = np.array([])
+radio = np.array([])
+d_array = np.array([])
+h_array = np.array([])
+#for y,d in zip(year[:-2],day[:-2]):
+#[year,day] = utils.getdaysfromlist(constant.listfolder + listname)
+nrofday = constant.doy
+print ' delt = ' ,delt ,' and delp = ', delp 
+datafolder = '/t'+str(delt) + 'p'+str(delp)+'/'
+for y in [2015,2016,2017]:
+    for d in range(1,nrofday[y]+1,1):
+        outfolder = constant.resultfoldertest +datafolder +  str(stid)
+        datafilename = outfolder + '/data_' + str(int(y)) + '_' + str(int(d)) + '.pkl'
+        if os.path.isfile(datafilename):
+            datafile = open(datafilename,'rb')
+        else:
+            continue
+
+#datafile = open(datafilename, 'rb')
+        thedata = pickle.load(datafile)
+#    for t in thedata.timedata:
+#        time = np.append(time,10000*d + t.hour*100 + t.minute)
+        time = np.append(time,thedata.timedata)
+        humidity = np.append(humidity, thedata.humidity)
+        radio = np.append(radio, thedata.data)
+        d_array = np.append(d_array,d)
+        h_array = np.append(h_array,np.mean(thedata.humidity))
+    
+        datafile.close()
+
+
+
+plt.plot(time, humidity)
+plt.plot(time, radio)
+#plt.plot(d_array,h_array)
+plt.show()
